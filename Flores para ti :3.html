@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Yolanda 🌻</title>
+    <style>
+        :root {
+            --color-amarillo: #ffeb3b;
+            --brillo-oro: #fbc02d;
+        }
 
+        body, html {
+            margin: 0; 
+            padding: 0; 
+            height: 100%;
+            overflow: hidden; 
+            text-align: center;
+            font-family: 'Georgia', serif; /* Un tipo de letra un poco más elegante */
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        .stars-container {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute; 
+            background: white; 
+            border-radius: 50%;
+            opacity: 0.5; 
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .content {
+            position: relative; 
+            z-index: 10;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            height: 100vh; 
+            padding: 20px;
+        }
+
+        .vibrant-text h1 {
+            color: var(--color-amarillo);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--brillo-oro), 0 0 20px var(--brillo-oro);
+            animation: pulse-glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        .vibrant-text p {
+            color: #fff9c4; 
+            font-size: 1.4rem; 
+            font-weight: bold;
+            line-height: 1.6;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            margin: 10px 0;
+        }
+
+        .signature {
+            font-style: italic;
+            color: #fdd835 !important;
+            margin-top: 25px !important;
+        }
+
+        @keyframes pulse-glow {
+            from { text-shadow: 0 0 10px var(--brillo-oro), 0 0 20px var(--brillo-oro); }
+            to { text-shadow: 0 0 20px var(--brillo-oro), 0 0 40px #ffee58, 0 0 10px #fff; }
+        }
+
+        #start-btn {
+            padding: 18px 40px; 
+            font-size: 1.3rem;
+            background: linear-gradient(45deg, #fdd835, #f9a825);
+            color: #4e342e; 
+            border: none; 
+            border-radius: 50px;
+            font-weight: bold; 
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(253, 216, 53, 0.5);
+            z-index: 100; 
+            transition: all 0.3s ease;
+            font-family: sans-serif;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(253, 216, 53, 0.8);
+        }
+
+        .girasol {
+            position: absolute; 
+            z-index: 5; 
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px var(--brillo-oro));
+            animation: galaxy-float 6s linear forwards;
+        }
+
+        @keyframes galaxy-float {
+            0% { transform: translate(0, 110vh) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translate(var(--side-move), 80vh) scale(1); }
+            100% { transform: translate(calc(var(--side-move) * 2), -20vh) rotate(360deg) scale(1.5); opacity: 0; }
+        }
+
+        .hidden { 
+            display: none !important; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="starsBox"></div>
+
+    <div id="ui" class="content">
+        <button id="start-btn">🌻 Un Regalo para mi Lady 🌻</button>
+        
+        <div id="message" class="hidden vibrant-text">
+            <h1>¡Para Yolanda!</h1>
+            <p>En este día especial, te envío un universo<br>lleno de flores amarillas.</p>
+            <p>Que su brillo te recuerde siempre<br>lo especial que eres.</p>
+            <p class="signature">De parte de tu caballero, para su adorada lady. 💛✨</p>
+        </div>
+    </div>
+
+    <script>
+        const starsBox = document.getElementById('starsBox');
+        const btn = document.getElementById('start-btn');
+        const message = document.getElementById('message');
+
+        // Generar estrellas de fondo
+        function initStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 'px';
+                star.style.width = size; 
+                star.style.height = size;
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+                starsBox.appendChild(star);
+            }
+        }
+        initStars();
+
+        // Evento al hacer clic en el botón
+        btn.addEventListener('click', () => {
+            btn.classList.add('hidden');
+            message.classList.remove('hidden');
+            
+            // Iniciar lluvia de girasoles (sin música)
+            setInterval(spawnSunflower, 400);
+        });
+
+        // Crear girasoles flotantes
+        function spawnSunflower() {
+            const sunflower = document.createElement('div');
+            sunflower.className = 'girasol';
+            sunflower.innerHTML = '🌻';
+            sunflower.style.left = Math.random() * 90 + 'vw';
+            sunflower.style.setProperty('--side-move', (Math.random() * 100 - 50) + 'px');
+            sunflower.style.fontSize = (Math.random() * 20 + 30) + 'px';
+            document.body.appendChild(sunflower);
+            
+            // Eliminar el girasol después de 6 segundos
+            setTimeout(() => sunflower.remove(), 6000);
+        }
+    </script>
+</body>
+</html>
